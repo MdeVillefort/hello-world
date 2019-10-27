@@ -1,0 +1,96 @@
+% I wrote this in TeXworks.
+
+\documentclass{article}
+
+\usepackage[margin = 2cm]{geometry} % sets margins of document to 2 cm
+\usepackage[colorlinks = true, linkcolor = red]{hyperref} % creates internal links whenever \ref is used
+\usepackage{mdframed} % includes the mdframed env for boxes of text
+\usepackage{verbatim} % includes comment env for multi line comments
+\usepackage{graphicx} % includes figure env
+\usepackage{amsthm} % includes \theoremstyle command to modify sytle of numbered env, particularly \newtheorem
+
+\setlength{\parindent}{0cm} % set paragraph indent to zero throughout document
+\newcommand{\ind}{\setlength{1cm}} % creates custom \ind length for paragraph indents
+
+\theoremstyle{definition} % the following 4 lines set up my definition and proposition numbered envs
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{definition}
+\newtheorem{proposition}{Proposition}[section]
+
+\title{
+\Huge Definitions and Theorems\\
+\Large Advanced Linear Systems Theory
+}
+\author{Ethan Ross}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{2cm}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale = 0.4]{UOA_Logo.png}
+\end{figure}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\section{Vector Spaces} \label{ch:1}
+
+\subsection{$R^n$ and $C^n$} \label{sec:1A}
+
+\section{Eigenvalues, Eigenvectors, and Invariant Subspaces} \label{ch:5}
+
+\subsection{Invariant Subspaces} \label{sec:5A}
+
+\begin{definition} \label{def:5.2}
+	\textit{ invariant subpaces}\\
+	Suppose $T \in \mathcal{L}(V)$.  A subspace $U$ of $V$ is called \emph{invariant} under $T$ if $u \in U$ implies $Tu \in U$.
+\end{definition}
+
+\begin{definition} \label{def:5.5}
+	\textit{eigenvalue}\\
+	Suppose $T \in \mathcal{L}(V)$.  A number $\lambda \in F$ is called an \emph{eigenvalue} of $T$ if there exists $v \in V$ such that $v \neq 0$ and $Tv = \lambda v$.
+
+	Note: eigenvalues are intimately connected with 1D invariant subspaces.
+\end{definition}
+
+\begin{proposition} \label{prop:5.6}
+	\textit{Equivalent conditions to be an eigenvalue}\\
+	Suppose $V$ is finite-dimensional, $T \in \mathcal{L}(V)$, and $\lambda \in F$.  Then the following are equivalent:
+
+	\begin{enumerate}
+		\item $\lambda$ is an eigenvalue of $T$;
+
+		\item $T - \lambda I$ is not injective;
+
+		\item $T - \lambda I$ is not surjective;
+
+		\item $T - \lambda I$ is not invertible.
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition} \label{def:5.7}
+	\textit{eigenvector}\\
+	Suppose $T \in \mathcal{L}(V)$ and $\lambda \in F$ is an eigenvalue of $T$.  A vector $v \in V$ is called an \emph{eigvenvector} of $T$ corresponding to $\lambda$ if $v \neq 0$ and $Tv 		= \lambda v$.
+
+	Put another way, the vector $v \in V$ with $v \neq 0$ is an eigenvector of $T$ corresponding to $\lambda$ if and only if $v \in null(T - \lambda I)$.
+\end{definition}
+
+\begin{proposition} \label{prop:5.10}
+	\textit{Linearly independent eigenvectors}\\
+	Let $T \in\ \mathcal{L}(V)$.  Suppose $\lambda_1,..., \lambda_m$ are distinct eigenvalues of $T$ and $v_1,..., v_m$ are corresponding eigenvectors.  Then $v_1,..., v_m$ is linearly 			independent.
+\end{proposition}
+
+\begin{proposition} \label{prop:5.13}
+	\textit{Number of eigenvalues}\\
+	Suppose $V$ is finite-dimensional.  Then each operator on $V$ has at most dim $V$ distinct eigenvalues.
+	\medskip
+
+	\textbf{Proof}:
+\end{proposition}
+
+\end{document}
+
