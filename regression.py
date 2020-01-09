@@ -7,7 +7,9 @@ Created on Mon Jul  8 06:23:41 2019
 """
 
 import matplotlib.pyplot as plt
-from scipy.spatial import distance as dist
+plt.style.use('ggplot')
+#from scipy.spatial import distance as dist
+#from sklearn.linear_modal import LinearRegression
 
 def euclidean_distance(pt1, pt2):
     """Function to compute euclidean distances between two points
@@ -62,14 +64,13 @@ def get_gradient_at_b(x, y, b, m):
     """
     
     N = len(x)
-    
     diff = 0
     for i in range(N):
-        x_val = x[i]
-        y_val = y[i]
+        x_val = float(x[i])
+        y_val = float(y[i])
         diff += (y_val - ((m * x_val )+ b))
         
-    b_gradient = -(2/N) * diff  
+    b_gradient = -(2.0 / N) * diff  
     return b_gradient
 
 def get_gradient_at_m(x, y, b, m):
@@ -80,13 +81,16 @@ def get_gradient_at_m(x, y, b, m):
     N = len(x)
     diff = 0
     for i in range(N):
-        x_val = x[i]
-        y_val = y[i]
+        x_val = float(x[i])
+        y_val = float(y[i])
         diff += x_val * (y_val - ((m * x_val) + b))
-    m_gradient = -(2/N) * diff  
+    m_gradient = -(2.0 / N) * diff  
     return m_gradient
 
-def step_gradient(b_current, m_current, x, y, learning_rate):
+def step_gradient(x, y, m_current, b_current, learning_rate):
+    """Function which takes a single step defined by the gradients at m and b 
+    torward reducing loss.
+    """
     
     b_gradient = get_gradient_at_b(x, y, b_current, m_current)
     m_gradient = get_gradient_at_m(x, y, b_current, m_current)
@@ -94,29 +98,59 @@ def step_gradient(b_current, m_current, x, y, learning_rate):
     m = m_current - (learning_rate * m_gradient)
     
     return b, m
-  
-#Your gradient_descent function here:  
+
 def gradient_descent(x, y, learning_rate, num_iterations):
+    """Function which performs the gradient descent regression algorithm iterating 
+    with the given learing_rate num_iterations times.
+    """
+    
     b = 0
     m = 0
     
     for i in range(num_iterations):
-        b, m = step_gradient(b, m, x, y, learning_rate)
+        b, m = step_gradient(x, y, m, b, learning_rate)
     
     return b, m
 
+def plot_conv(x, y, learning_rate, num_iterations, param = 'm'):
+    """Fuction which will plot the convergence of the parameter 'param' for a
+    partiuclar run of the gradient descent regression algorithm.
+    """
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    
+    b = 0; m = 0
+    ms = []; bs = []
+    for i in range(num_iterations):
+        b, m = step_gradient(x, y, m, b, learning_rate)
+        ms.append(m)
+        bs.append(b)
+    
+    if param == 'm':
+        ax.plot(range(num_iterations), ms)
+        ax.set(title = 'convergence of m', xlabel = 'iteration', ylabel = 'slope')
+    elif param == 'b':
+        ax.plot(range(num_iterations), bs)
+        ax.set(title = 'convergence of b', xlabel = 'iteration', ylabel = 'intercept')
+    
+    plt.show()
 
+ # TEST #
 months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 revenue = [52, 74, 79, 95, 115, 110, 129, 126, 147, 146, 156, 184]
 
-#Uncomment the line below to run your gradient_descent function
 b, m = gradient_descent(months, revenue, 0.01, 1000)
+y = [float(m)*x + b for x in months]
 
-#Uncomment the lines below to see the line you've settled upon!
-y = [m*x + b for x in months]
-
-plt.plot(months, revenue, "o", label = 'data')
-plt.plot(months, y, label = 'model')
-plt.legend()
-
+# Plot data and modal predicted values
+fig = plt.figure(num = 1)
+ax = fig.add_subplot(111)
+ax.plot(months, revenue, "o", label = 'data')
+ax.plot(months, y, label = 'model')
+ax.legend()
 plt.show()
+
+# Plot convergences
+plot_conv(months, revenue, 0.01, 1000, param = 'm')
+plot_conv(months, revenue, 0.01, 1000, param = 'b')
