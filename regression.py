@@ -134,23 +134,23 @@ def plot_conv(x, y, learning_rate, num_iterations, param = 'm'):
         ax.plot(range(num_iterations), bs)
         ax.set(title = 'convergence of b', xlabel = 'iteration', ylabel = 'intercept')
     
-    plt.show()
 
  # TEST #
 months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 revenue = [52, 74, 79, 95, 115, 110, 129, 126, 147, 146, 156, 184]
 
-b, m = gradient_descent(months, revenue, 0.01, 1000)
+b, m = gradient_descent(months, revenue, 0.01, 2000)
 y = [float(m)*x + b for x in months]
 
 # Plot data and modal predicted values
-fig = plt.figure(num = 1)
+fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.plot(months, revenue, "o", label = 'data')
 ax.plot(months, y, label = 'model')
 ax.legend()
-plt.show()
 
 # Plot convergences
-plot_conv(months, revenue, 0.01, 1000, param = 'm')
-plot_conv(months, revenue, 0.01, 1000, param = 'b')
+plot_conv(months, revenue, 0.01, 2000, param = 'm')
+plot_conv(months, revenue, 0.01, 2000, param = 'b')
+
+plt.show()
